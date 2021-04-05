@@ -1,0 +1,3 @@
+displayName = Charged Jellyfish Mod
+author = Blockaroz
+version = 0.2
