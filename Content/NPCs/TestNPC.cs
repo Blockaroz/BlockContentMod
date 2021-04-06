@@ -95,11 +95,9 @@ namespace BlockContentMod.Content.NPCs
 
         public override Color? GetAlpha(Color drawColor) => Color.White;
 
-        public float wobbleCounter { get; set; }
+        public float WobbleCounter { get; set; }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor) => false;
-
-        public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
             Asset<Texture2D> glowBall = ModContent.GetTexture("BlockContentMod/Assets/GlowBall_" + (short)1);
             Asset<Texture2D> bubbleTexture = ModContent.GetTexture("BlockContentMod/Content/NPCs/JellyfishBoss/JellyfishBubble");
@@ -107,11 +105,26 @@ namespace BlockContentMod.Content.NPCs
             Asset<Texture2D> coreTexture = ModContent.GetTexture("BlockContentMod/Content/NPCs/JellyfishBoss/JellyfishCore");
             Asset<Texture2D> coreGlow = ModContent.GetTexture("BlockContentMod/Content/NPCs/JellyfishBoss/JellyfishCore_Glow");
 
-            wobbleCounter++;
+            WobbleCounter++;
             float tick = 90;
-            if (wobbleCounter > tick)
-                wobbleCounter = 0;
-            float wobbleReal = (wobbleCounter * MathHelper.PiOver2) / tick;
+            if (WobbleCounter > tick)
+                WobbleCounter = 0;
+            float wobbleReal = (WobbleCounter * MathHelper.PiOver2) / tick;
+
+            if (NPC.velocity.Length() >= 3f)
+            {
+                const short rotateFactor = 9;
+                float rotationValue = (NPC.velocity.X * 0.03f) + (NPC.velocity.Y * 0.03f);
+                NPC.rotation = (NPC.rotation * (rotateFactor - 1f) + rotationValue) / rotateFactor;
+            }
+            else
+            {
+                NPC.rotation *= 0.95f;
+                if (Math.Abs(NPC.rotation) < 0.02f)
+                {
+                    NPC.rotation = 0;
+                }
+            } 
 
             float waveX = (float)Math.Cos(wobbleReal * 8f);
             float waveY = (float)Math.Sin(wobbleReal * 8f);
@@ -126,7 +139,7 @@ namespace BlockContentMod.Content.NPCs
             Vector2 tentacleWobble = new Vector2(waveX, waveY) * trueScale;
 
             Color color = Color.White;
-            color.A = 10;
+            color.A = 0;
             Color color2 = Color.White;
             color2.A = 60;
 
@@ -134,14 +147,13 @@ namespace BlockContentMod.Content.NPCs
             Vector2 glowScale0 = (new Vector2(0.89f) + new Vector2(waveV)) * trueScale;
             Vector2 offsetVector = (Vector2.UnitY * trueScale * 20).RotatedBy(NPC.rotation);
 
-            if (NPC.velocity.Length() >= 2)
-                NPC.rotation = NPC.velocity.ToRotation() + MathHelper.PiOver2;
-            else
-                NPC.rotation *= 0.8f;
-
             spriteBatch.Draw(coreTexture.Value, NPC.Center - Main.screenPosition + offsetVector, null, Color.White, rotation, coreOrigin, trueScale, SpriteEffects.None, 0f);
 
             default(JellyfishTentacleHelper).DrawLowerHalf(spriteBatch, NPC, tentacleWobble, trueScale.Y);
+
+            spriteBatch.Draw(bubbleGlow.Value, NPC.Center - Main.screenPosition, null, color2, rotation, bubbleOrigin, wobbleScale, SpriteEffects.None, 0f);
+
+            ExtendedUtils.DrawStreak(glowBall, SpriteEffects.None, NPC.Center - Main.screenPosition + offsetVector, glowBall.Size() / 2f, 1.5f, glowScale0.X, glowScale0.Y, rotation, ExtendedColor.JellyRed, ExtendedColor.JellyOrange);
 
             for (int i = 0; i < 2; i++)
             {
@@ -150,16 +162,15 @@ namespace BlockContentMod.Content.NPCs
                 spriteBatch.Draw(coreGlow.Value, NPC.Center - Main.screenPosition + offsetVector, null, color, rotation, coreOrigin, glowScale, SpriteEffects.None, 0f);
             }
 
-            ExtendedUtils.DrawStreak(glowBall, SpriteEffects.None, NPC.Center - Main.screenPosition + offsetVector, glowBall.Size() / 2f, 1.5f, glowScale0.X, glowScale0.Y, rotation, ExtendedColor.JellyOrange, ExtendedColor.JellyOrange);
-
             Dust coreDust = Dust.NewDustDirect(NPC.Center + offsetVector - new Vector2(30), 60, 60, ModContent.DustType<JellyExplosionDust>(), 0, 0, 128, Color.White, 1.5f);
             coreDust.velocity *= 0.9f;
             coreDust.position += NPC.velocity;
 
-            spriteBatch.Draw(bubbleGlow.Value, NPC.Center - Main.screenPosition, null, color2, rotation, bubbleOrigin, wobbleScale, SpriteEffects.None, 0f);
             spriteBatch.Draw(bubbleTexture.Value, NPC.Center - Main.screenPosition, null, Color.White, rotation, bubbleOrigin, wobbleScale, SpriteEffects.None, 0f);
 
-            Lighting.AddLight(NPC.Center + offsetVector, ExtendedColor.JellyOrange.ToVector3() * 0.5f);
+            Lighting.AddLight(NPC.Center + offsetVector, ExtendedColor.JellyRed.ToVector3() * 0.1f);
+
+            return false;
         }
     }
 }
