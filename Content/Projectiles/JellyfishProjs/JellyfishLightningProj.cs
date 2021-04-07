@@ -27,7 +27,7 @@ namespace BlockContentMod.Content.Projectiles.JellyfishProjs
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.penetrate = -1;
-            Projectile.extraUpdates = 3;
+            Projectile.extraUpdates = 2;
             Projectile.timeLeft = 901;
         }
 
@@ -89,7 +89,7 @@ namespace BlockContentMod.Content.Projectiles.JellyfishProjs
                 float length = Projectile.scale * MathHelper.Lerp(1.5f, 1f, Terraria.Utils.GetLerpValue(60, 1, i, true));
                 Color lerpColor = Color.Lerp(Color.Goldenrod, Color.White, strength);
 
-                ExtendedUtils.DrawStreak(texture, SpriteEffects.None, Projectile.oldPos[i] + (Projectile.Size / 2) - Main.screenPosition, texture.Size() / 2f, strength2, 1f, length, Projectile.oldRot[i], alphaOrange, lerpColor);
+                ExtendedUtils.DrawStreak(texture, SpriteEffects.None, Projectile.oldPos[i] + (Projectile.Size / 2) - Main.screenPosition, texture.Size() / 2f, strength2, 0.9f, length, Projectile.oldRot[i], alphaOrange, lerpColor);
 
                 Lighting.AddLight(Projectile.Center, ExtendedColor.JellyOrange.ToVector3() * 0.3f * strength);
             }

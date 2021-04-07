@@ -30,7 +30,7 @@ namespace BlockContentMod.Effects
                 if (i == 16)//head
                 {
                     scale = Vector2.One;
-                    rectangle = new Rectangle(0, 54, 18, 18);
+                    rectangle = new Rectangle(0, 52, 18, 18);
                     origin = new Vector2(9, 6);
                 }
                 else if (i > 12)
@@ -62,7 +62,7 @@ namespace BlockContentMod.Effects
 
                 if (i == 16)
                 {
-                    ExtendedUtils.DrawStreak(glowBall, SpriteEffects.None, position + new Vector2(0, 3).RotatedBy(pointRotation) - Main.screenPosition, glowBall.Size() / 2f, 0.5f, glowScale, glowScale, pointRotation, ExtendedColor.JellyRed * 0.15f, ExtendedColor.JellyOrange * 0.15f);
+                    ExtendedUtils.DrawStreak(glowBall, SpriteEffects.None, position + new Vector2(0, 3).RotatedBy(pointRotation) - Main.screenPosition, glowBall.Size() / 2f, 0.5f, glowScale, glowScale, pointRotation, ExtendedColor.JellyRed * 0.2f, ExtendedColor.JellyOrange * 0.2f);
                     Lighting.AddLight(position, ExtendedColor.JellyRed.ToVector3() * 0.1f);
                 }
 
@@ -72,7 +72,7 @@ namespace BlockContentMod.Effects
         }
 
 
-        public void DrawLowerHalf(SpriteBatch spriteBatch, NPC npc, Vector2 wobbleVector, float scale)
+        public void DrawLowerHalf(SpriteBatch spriteBatch, Vector2 center, float rotation, float scale, Vector2 wobbleVector)
         {
             int points = 5;
             for (int i = 0; i < points; i += 1)
@@ -80,16 +80,16 @@ namespace BlockContentMod.Effects
                 float wave = wobbleVector.X;
                 float wave2 = wobbleVector.Y;
 
-                Vector2 endCenterPoint = npc.Center + (new Vector2(0, 52 + (wave * npc.direction))).RotatedBy(npc.rotation);
+                Vector2 endCenterPoint = center + (new Vector2(0, 50 + wave)).RotatedBy(rotation);
 
-                float angleRadius = (90f + (wave * 72f)) * scale;
-                float distance = 60f * scale;
+                float angleRadius = (100f + (wave * 80f)) * scale;
+                float distance = 64f * scale;
                 Vector2 segmentEnd = endCenterPoint + new Vector2(0f, distance)
-                    .RotatedBy(MathHelper.ToRadians((angleRadius / points * i) - (angleRadius / points * 2)) + npc.rotation);
+                    .RotatedBy(MathHelper.ToRadians((angleRadius / points * i) - (angleRadius / points * 2)) + rotation);
 
-                Vector2 centralControlPoint = npc.Center + (new Vector2(0, 72 + (wave2 * 30))).RotatedBy(npc.rotation) * scale;
+                Vector2 centralControlPoint = center + (new Vector2(0, 70 + (wave2 * 36))).RotatedBy(rotation) * scale;
                 float segmentLerp = 12 - (i * 6);
-                Vector2 segmentStart = npc.Center + (new Vector2(segmentLerp, 54) * scale).RotatedBy(npc.rotation);
+                Vector2 segmentStart = center + (new Vector2(segmentLerp, 34) * scale).RotatedBy(rotation);
 
                 DrawTentacle(spriteBatch, 16, segmentStart, centralControlPoint, segmentEnd, 1 + (wobbleVector.Y * 0.3f));
             }
