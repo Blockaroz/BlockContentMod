@@ -13,5 +13,7 @@ namespace BlockContentMod
         public static readonly Color JellyRed = new Color(186, 48, 40);
 
         public static readonly Color RiftMagenta = new Color(229, 141, 211);
+
+        public static readonly Color ZenithGreen = new Color(178, 255, 180);
     }
 }

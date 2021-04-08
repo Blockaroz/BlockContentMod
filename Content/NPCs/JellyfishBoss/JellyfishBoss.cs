@@ -53,7 +53,7 @@ namespace BlockContentMod.Content.NPCs.JellyfishBoss
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement>
             {
                 new MoonLordPortraitBackgroundProviderBestiaryInfoElement(),
-                new FlavorTextBestiaryInfoElement("This jellyfish has grown to multitudinous sizes and holds electrical charge within itself. It is a surprise that it has kept its form for so long.")
+                new FlavorTextBestiaryInfoElement("This jellyfish has grown to multitudinous sizes and holds volatile material within itself. It is a surprise that it has kept its form for so long.")
             });
         }
 
@@ -80,8 +80,9 @@ namespace BlockContentMod.Content.NPCs.JellyfishBoss
             NPCID.Sets.BossBestiaryPriority.Add(Type);
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
             {
-                CustomTexturePath = "BlockContentMod/Content/Bestiary/JellyfishStill",
-                PortraitPositionYOverride = -3f,
+                CustomTexturePath = "BlockContentMod/Content/Bestiary/JellyfishPortrait",
+                PortraitPositionYOverride = -6f,
+                PortraitPositionXOverride = 18f
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
         }
@@ -99,16 +100,16 @@ namespace BlockContentMod.Content.NPCs.JellyfishBoss
             NPC.DeathSound = SoundID.DD2_LightningBugDeath;
 
             Music = MusicID.Boss2;
-            NPC.lifeMax = 7000;
+            NPC.lifeMax = 5000;
             NPC.lifeRegen = 1;
-            NPC.defense = 30;
+            NPC.defense = 20;
             NPC.value = Item.buyPrice(gold: 4);
             NPC.SpawnWithHigherTime(8);
             NPC.knockBackResist = 0.2f;
             NPC.damage = NPC.GetAttackDamage_ScaledByStrength(15);
         }
 
-        public override void OnKill()
+        public override bool PreKill()
         {
             for (int i = 0; i < 4; i++)
             {
@@ -120,7 +121,7 @@ namespace BlockContentMod.Content.NPCs.JellyfishBoss
             Vector2 bubbleSpeed = bubbleDust.position.DirectionFrom(NPC.Center);
             bubbleDust.velocity = bubbleSpeed;
 
-            
+            return true;
         }
 
         public override void BossLoot(ref string name, ref int potionType)
