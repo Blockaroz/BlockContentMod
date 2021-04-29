@@ -1,5 +1,5 @@
 ﻿using BlockContentMod.Content.Dusts;
-using BlockContentMod.Effects;
+using BlockContentMod.Drawing;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -97,7 +97,7 @@ namespace BlockContentMod.Content.NPCs
 
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
         {
-            default(JellyfishTentacleHelper).DrawLowerHalf(spriteBatch, NPC.Center, 0, 1f, new Vector2(0.8f, -0.3f));
+            default(JellyfishTentacleHelper).DrawLowerHalfTentacles(spriteBatch, NPC.Center, 0, 1f, new Vector2(0.8f, -0.3f));
         }
     }
 }

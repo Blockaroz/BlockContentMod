@@ -6,7 +6,7 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 
-namespace BlockContentMod.Effects
+namespace BlockContentMod.Drawing
 {
     public struct JellyfishTentacleHelper
     {
@@ -72,7 +72,7 @@ namespace BlockContentMod.Effects
         }
 
 
-        public void DrawLowerHalf(SpriteBatch spriteBatch, Vector2 center, float rotation, float scale, Vector2 wobbleVector)
+        public void DrawLowerHalfTentacles(SpriteBatch spriteBatch, Vector2 center, float rotation, float scale, Vector2 wobbleVector)
         {
             int points = 5;
             for (int i = 0; i < points; i += 1)

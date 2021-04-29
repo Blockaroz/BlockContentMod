@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 
-namespace BlockContentMod.Effects
+namespace BlockContentMod.Drawing
 {
     [StructLayout(LayoutKind.Sequential, Size = 1)]
     public struct WarblerDrawer

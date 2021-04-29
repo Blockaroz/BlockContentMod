@@ -1,6 +1,7 @@
 using BlockContentMod.Content.Projectiles.StygianWeapons;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -39,14 +40,13 @@ namespace BlockContentMod.Content.Items.StygianWeapons
             Item.noUseGraphic = true;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             float scale = 1f - (Main.rand.NextFloat() * .2f);
             float angle = MathHelper.ToRadians(18);
-            Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(angle);
+            Vector2 perturbedSpeed = velocity.RotatedByRandom(angle);
             perturbedSpeed *= scale;
-            speedX = perturbedSpeed.X;
-            speedY = perturbedSpeed.Y;
+            velocity = perturbedSpeed;
             return true;
         }
 

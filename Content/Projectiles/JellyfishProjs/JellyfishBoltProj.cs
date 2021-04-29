@@ -65,9 +65,9 @@ namespace BlockContentMod.Content.Projectiles.JellyfishProjs
 
             for (int i = 0; i < 4; i++)
             {
-                float length = Utils.GetLerpValue(720, 705, Projectile.timeLeft, true) * 3f;
+                float length = Utils.GetLerpValue(720, 705, Projectile.timeLeft, true) * 2.2f;
                 float rotation = t + (MathHelper.PiOver2 * i);
-                Vector2 offset = new Vector2(0, 7).RotatedBy(rotation);
+                Vector2 offset = new Vector2(0, 5).RotatedBy(rotation);
                 ExtendedUtils.DrawStreak(texture, SpriteEffects.None, Projectile.oldPos[1] + (Projectile.Size / 2f) - offset - Main.screenPosition, origin, 1.5f, 1f, length, Projectile.rotation, ExtendedColor.JellyOrange * 0.1f, ExtendedColor.JellyOrange * 0.7f);
             }
 

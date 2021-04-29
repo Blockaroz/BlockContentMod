@@ -1,5 +1,5 @@
 ﻿using BlockContentMod.Content.Dusts;
-using BlockContentMod.Effects;
+using BlockContentMod.Drawing;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;

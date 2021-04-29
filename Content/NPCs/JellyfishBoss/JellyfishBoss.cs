@@ -1,6 +1,6 @@
 ﻿using BlockContentMod.Content.Dusts;
 using BlockContentMod.Content.Projectiles.JellyfishProjs;
-using BlockContentMod.Effects;
+using BlockContentMod.Drawing;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -739,7 +739,7 @@ namespace BlockContentMod.Content.NPCs.JellyfishBoss
             
             spriteBatch.Draw(coreTexture.Value, NPC.Center - Main.screenPosition, null, Color.White, rotation, coreOrigin, trueScale, SpriteEffects.None, 0f);
 
-            default(JellyfishTentacleHelper).DrawLowerHalf(spriteBatch, NPC.Center, NPC.rotation, trueScale.Y, tentacleWobble);
+            default(JellyfishTentacleHelper).DrawLowerHalfTentacles(spriteBatch, NPC.Center, NPC.rotation, trueScale.Y, tentacleWobble);
 
             spriteBatch.Draw(bubbleGlow.Value, NPC.Center - offsetVector - Main.screenPosition, null, color2, rotation, bubbleOrigin, wobbleScale, SpriteEffects.None, 0f);
 
@@ -749,12 +749,12 @@ namespace BlockContentMod.Content.NPCs.JellyfishBoss
 
             for (int i = 0; i < 2; i++)
             {
-                float waveW = (float)Math.Cos(wobbleReal + (i * MathHelper.PiOver4)) * 0.06f;
+                float waveW = (float)Math.Cos((wobbleReal * 2f) + (i * MathHelper.PiOver4)) * 0.06f;
                 Vector2 glowScale = (new Vector2(0.89f) + new Vector2(waveW)) * trueScale;
                 spriteBatch.Draw(coreGlow.Value, NPC.Center - Main.screenPosition, null, color2 * 0.5f, rotation, coreOrigin, glowScale, SpriteEffects.None, 0f);
             }
 
-            float waveV = (float)Math.Cos(wobbleReal + 1f) * 0.06f;
+            float waveV = (float)Math.Cos((wobbleReal * 2f) + 1f) * 0.06f;
             Vector2 glowScale0 = (new Vector2(0.89f) + new Vector2(waveV)) * trueScale;
             ExtendedUtils.DrawStreak(glowBall, SpriteEffects.None, NPC.Center - Main.screenPosition, glowBall.Size() / 2f, 1.5f, glowScale0.X, glowScale0.Y, rotation, ExtendedColor.JellyRed, ExtendedColor.JellyOrange * 0.7f);
 
