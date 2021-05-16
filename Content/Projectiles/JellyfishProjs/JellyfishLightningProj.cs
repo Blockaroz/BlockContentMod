@@ -71,9 +71,9 @@ namespace BlockContentMod.Content.Projectiles.JellyfishProjs
             return false;
         }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) => false;
+        public override bool PreDraw(ref Color lightColor) => false;
 
-        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override void PostDraw(Color lightColor)
         {
             Asset<Texture2D> texture = ModContent.GetTexture("BlockContentMod/Assets/Streak_" + (short)1);
 

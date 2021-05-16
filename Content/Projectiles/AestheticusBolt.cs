@@ -156,7 +156,7 @@ namespace BlockContentMod.Content.Projectiles
 
         public override Color? GetAlpha(Color lightColor) => Color.White;
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
             Lighting.AddLight(Projectile.Center, ColorMethod(speed: 0.5f).ToVector3() * 0.25f);
             for (int i = 0; i < 7; i++)

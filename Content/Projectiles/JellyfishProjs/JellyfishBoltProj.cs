@@ -45,7 +45,7 @@ namespace BlockContentMod.Content.Projectiles.JellyfishProjs
                 Projectile.Kill();
         }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
             Asset<Texture2D> texture = TextureAssets.Projectile[Type];

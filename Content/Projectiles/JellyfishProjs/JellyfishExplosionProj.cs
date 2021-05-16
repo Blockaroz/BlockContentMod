@@ -80,7 +80,7 @@ namespace BlockContentMod.Content.Projectiles.JellyfishProjs
             return false;
         }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
             Asset<Texture2D> glowBall = ModContent.GetTexture("BlockContentMod/Assets/GlowBall_" + (short)1);
             Color drawColor = Color.White;
@@ -94,7 +94,7 @@ namespace BlockContentMod.Content.Projectiles.JellyfishProjs
             if (Projectile.ai[0] <= 60)
             {
                 float bubbleScale = ExtendedUtils.GetSquareLerp(9, 50, 9, Projectile.ai[0]);
-                spriteBatch.Draw(TextureAssets.Projectile[Type].Value, Projectile.Center - Main.screenPosition, null, Color.White, 0, Projectile.Size / 2f, bubbleScale, SpriteEffects.None, 0);
+                Main.EntitySpriteDraw(TextureAssets.Projectile[Type].Value, Projectile.Center - Main.screenPosition, null, Color.White, 0, Projectile.Size / 2f, bubbleScale, SpriteEffects.None, 0);
             }
 
             float explosionScale = ExtendedUtils.GetSquareLerp(55, 58, 70, Projectile.ai[0]) * 1.8f;

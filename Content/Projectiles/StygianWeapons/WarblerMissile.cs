@@ -98,14 +98,14 @@ namespace BlockContentMod.Content.Projectiles.StygianWeapons
             }
         }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
             default(WarblerDrawer).Draw(Projectile);
             return false;
         }
 
-        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override void PostDraw(Color lightColor)
         {
             Asset<Texture2D> texture = TextureAssets.Extra[98];
             ExtendedUtils.DrawStreak(texture, SpriteEffects.None, Projectile.Center - Main.screenPosition, texture.Size() / 2f, Projectile.scale, 0.8f, 1.2f, Projectile.rotation, ExtendedColor.ShadeColor, Color.Black, 1, 250);

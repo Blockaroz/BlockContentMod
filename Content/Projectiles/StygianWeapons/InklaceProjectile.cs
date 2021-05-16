@@ -27,7 +27,7 @@ namespace BlockContentMod.Content.Projectiles.StygianWeapons
             Projectile.localNPCHitCooldown = -1;
         }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
             Asset<Texture2D> tex = TextureAssets.FishingLine;
             List<Vector2> points = new List<Vector2>();
@@ -40,7 +40,7 @@ namespace BlockContentMod.Content.Projectiles.StygianWeapons
                 float pointRotation = pointDifference.ToRotation() - MathHelper.PiOver2;
                 Color color = Lighting.GetColor(points[i].ToTileCoordinates(), ExtendedColor.ShadeColor);
                 Vector2 scale = new Vector2(1, (pointDifference.Length() + 2f) / (float)tex.Frame().Height);
-                spriteBatch.Draw(tex.Value, position - Main.screenPosition, tex.Frame(), color, pointRotation, origin, scale, SpriteEffects.None, 0);
+                Main.EntitySpriteDraw(tex.Value, position - Main.screenPosition, tex.Frame(), color, pointRotation, origin, scale, SpriteEffects.None, 0);
                 position += pointDifference;
             }
             position = Main.DrawWhip_WhipBland(Projectile, points);

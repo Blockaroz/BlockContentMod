@@ -680,7 +680,7 @@ namespace BlockContentMod.Content.NPCs.JellyfishBoss
             if (NPC.velocity.Length() >= 3f)
             {
                 const short rotateFactor = 9;
-                float rotationValue = (NPC.velocity.X * 0.05f) + (NPC.velocity.Y * 0.05f);
+                float rotationValue = NPC.velocity.X * 0.05f;
                 NPC.rotation = (NPC.rotation * (rotateFactor - 1f) + rotationValue) / rotateFactor;
             }
             else
