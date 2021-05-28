@@ -10,8 +10,8 @@ namespace BlockContentMod.Content.Rarities
         private Color ColorMethod()
         {
             float t = (float)Math.Abs(Math.Sin(Main.GlobalTimeWrappedHourly * 0.21f));
-            float lerp = ExtendedUtils.GetSquareLerp(0.2f, 0.35f, 0.5f, t);
-            Color result = Color.Lerp(ExtendedColor.LightRed, ExtendedColor.ShadeColor, lerp);
+            float lerp = EUtils.GetSquareLerp(0.2f, 0.35f, 0.5f, t);
+            Color result = Color.Lerp(EColor.LightRed, EColor.ShadeColor, lerp);
             return result;
         }
 

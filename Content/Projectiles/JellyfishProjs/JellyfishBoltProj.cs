@@ -45,7 +45,7 @@ namespace BlockContentMod.Content.Projectiles.JellyfishProjs
                 Projectile.Kill();
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
             Asset<Texture2D> texture = TextureAssets.Projectile[Type];
@@ -60,7 +60,7 @@ namespace BlockContentMod.Content.Projectiles.JellyfishProjs
             for (int i = 1; i < ProjectileID.Sets.TrailCacheLength[Type]; i++)
             {
                 float strength = Utils.GetLerpValue(ProjectileID.Sets.TrailCacheLength[Type], 0, i, true);
-                ExtendedUtils.DrawStreak(texture, SpriteEffects.None, Projectile.oldPos[i] + (Projectile.Size / 2f) - Main.screenPosition, origin, strength, 1f, 2f, Projectile.oldRot[i], ExtendedColor.JellyOrange * 0.1f, ExtendedColor.JellyOrange * 0.7f);
+                EUtils.DrawStreak(texture, SpriteEffects.None, Projectile.oldPos[i] + (Projectile.Size / 2f) - Main.screenPosition, origin, strength, 1f, 2f, Projectile.oldRot[i], EColor.JellyfishOrange * 0.1f, EColor.JellyfishOrange * 0.7f);
             }
 
             for (int i = 0; i < 4; i++)
@@ -68,12 +68,12 @@ namespace BlockContentMod.Content.Projectiles.JellyfishProjs
                 float length = Utils.GetLerpValue(720, 705, Projectile.timeLeft, true) * 2.2f;
                 float rotation = t + (MathHelper.PiOver2 * i);
                 Vector2 offset = new Vector2(0, 5).RotatedBy(rotation);
-                ExtendedUtils.DrawStreak(texture, SpriteEffects.None, Projectile.oldPos[1] + (Projectile.Size / 2f) - offset - Main.screenPosition, origin, 1.5f, 1f, length, Projectile.rotation, ExtendedColor.JellyOrange * 0.1f, ExtendedColor.JellyOrange * 0.7f);
+                EUtils.DrawStreak(texture, SpriteEffects.None, Projectile.oldPos[1] + (Projectile.Size / 2f) - offset - Main.screenPosition, origin, 1.5f, 1f, length, Projectile.rotation, EColor.JellyfishOrange * 0.1f, EColor.JellyfishOrange * 0.7f);
             }
 
-            ExtendedUtils.DrawStreak(texture, SpriteEffects.None, Projectile.Center - Main.screenPosition, origin, 1f, 1f, 1f, Projectile.rotation, ExtendedColor.JellyOrange, Color.LightGoldenrodYellow);
+            EUtils.DrawStreak(texture, SpriteEffects.None, Projectile.Center - Main.screenPosition, origin, 1f, 1f, 1f, Projectile.rotation, EColor.JellyfishOrange, Color.LightGoldenrodYellow);
 
-            Lighting.AddLight(Projectile.Center, ExtendedColor.JellyOrange.ToVector3() * 0.3f);
+            Lighting.AddLight(Projectile.Center, EColor.JellyfishOrange.ToVector3() * 0.3f);
             Dust dust = Main.dust[Dust.NewDust(Projectile.oldPos[1] + (Projectile.Size / 2f), 0, 0, ModContent.DustType<JellyExplosionDust>(), 0, 0, 128, Color.White, 1.3f)];
             dust.noGravity = true;
 

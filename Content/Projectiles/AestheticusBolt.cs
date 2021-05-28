@@ -49,7 +49,7 @@ namespace BlockContentMod.Content.Projectiles
             {
                 Vector2 circle;
                 if (randomized == true)
-                    circle = new Vector2(0, size).RotatedByRandom(ExtendedUtils.GetCircle(i, dustCount));
+                    circle = new Vector2(0, size).RotatedByRandom(EUtils.GetCircle(i, dustCount));
                 else
                     circle = new Vector2(0, size).RotatedBy((MathHelper.TwoPi / dustCount) * i);
                 Dust dust = Dust.NewDustPerfect(Projectile.Center, DustType, circle, 0, ColorMethod(speed: 2), 1.2f);
@@ -156,7 +156,7 @@ namespace BlockContentMod.Content.Projectiles
 
         public override Color? GetAlpha(Color lightColor) => Color.White;
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             Lighting.AddLight(Projectile.Center, ColorMethod(speed: 0.5f).ToVector3() * 0.25f);
             for (int i = 0; i < 7; i++)
@@ -170,7 +170,7 @@ namespace BlockContentMod.Content.Projectiles
             Projectile.localAI[1] = (float)Math.Cos(Main.GlobalTimeWrappedHourly * 4.5f) * 0.05f;
 
             Asset<Texture2D> texture = TextureAssets.Extra[98];
-            ExtendedUtils.DrawSparkle(texture, SpriteEffects.None, Projectile.Center - Main.screenPosition, texture.Size() / 2f, 0.5f + Projectile.localAI[0], 0.5f, 1.5f + Projectile.localAI[1], 1.5f + Projectile.localAI[1], 0f, ColorMethod(speed: 1.77f, L: 0.6f), Color.White, 1f);
+            EUtils.DrawSparkle(texture, SpriteEffects.None, Projectile.Center - Main.screenPosition, texture.Size() / 2f, 0.5f + Projectile.localAI[0], 0.5f, 1.5f + Projectile.localAI[1], 1.5f + Projectile.localAI[1], 0f, ColorMethod(speed: 1.77f, L: 0.6f), Color.White, 1f);
 
             return false;
         }

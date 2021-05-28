@@ -1,12 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System;
 using System.Collections.Generic;
 using Terraria;
 
 namespace BlockContentMod
 {
-    public class ExtendedUtils
+    public partial class EUtils
     {
         ///Credits
         ///Seraph for Bezier help
@@ -49,12 +50,12 @@ namespace BlockContentMod
 
         public static float GetSquareLerp(float start, float middle, float end, float value)
         {
-            return Terraria.Utils.GetLerpValue(start, middle, value, true) * Terraria.Utils.GetLerpValue(end, middle, value, true);
+            return Utils.GetLerpValue(start, middle, value, true) * Utils.GetLerpValue(end, middle, value, true);
         }
 
         public static float GetSquareLerp(float start, float middleOne, float middleTwo, float end, float value)
         {
-            return Terraria.Utils.GetLerpValue(start, middleOne, value, true) * Terraria.Utils.GetLerpValue(end, middleTwo, value, true);
+            return Utils.GetLerpValue(start, middleOne, value, true) * Utils.GetLerpValue(end, middleTwo, value, true);
         }
 
         public static float GetCircle(float counter, float total, float piMultiplier = 1f)
@@ -102,19 +103,49 @@ namespace BlockContentMod
                 controlPoints.Add(startPoint);
                 controlPoints.Add(midPoint);
                 controlPoints.Add(endPoint);
-                return controlPoints;
             }
             else
             {
                 for (float i = 0; i < pointCount - 1; i += interval)
                 {
-                    Vector2 point1 = Vector2.Lerp(startPoint, midPoint, i);
-                    Vector2 point2 = Vector2.Lerp(midPoint, endPoint, i);
-                    Vector2 control = Vector2.Lerp(point1, point2, i);
+                    Vector2 startToMid = Vector2.Lerp(startPoint, midPoint, i);
+                    Vector2 MidToEnd = Vector2.Lerp(midPoint, endPoint, i);
+                    //Vector2 startToEnd = Vector2.Lerp(startPoint, endPoint, i);
+                    //excluding this because the difference is negligable
+
+                    Vector2 control = Vector2.Lerp(startToMid, MidToEnd, i);
                     controlPoints.Add(control);
                 }
-                return controlPoints;
             }
+            return controlPoints;
+        }
+
+        public static List<Vector2> CubicBezierPoints(Vector2 startPoint, Vector2 firstMidPoint, Vector2 secondMidPoint, Vector2 endPoint, int pointCount)
+        {
+            List<Vector2> controlPoints = new List<Vector2>();
+            float interval = 1f / (pointCount - 1);
+
+            if (pointCount <= 2)
+            {
+                controlPoints.Add(startPoint);
+                controlPoints.Add(firstMidPoint);
+                controlPoints.Add(secondMidPoint);
+                controlPoints.Add(endPoint);
+            }
+            else
+            {
+                for (float i = 0; i < pointCount - 1; i += interval)
+                {
+                    float j = Math.Max(0, (int)(i * (pointCount - 1)));
+                    List<Vector2> midA = QuadraticBezierPoints(startPoint, firstMidPoint, secondMidPoint, pointCount);
+                    List<Vector2> midB = QuadraticBezierPoints(firstMidPoint, secondMidPoint, endPoint, pointCount);
+                    
+                    Vector2 control = Vector2.Lerp(midA[(int)j], midB[(int)j], i);
+
+                    controlPoints.Add(control);
+                }
+            }
+            return controlPoints;
         }
     }
 }

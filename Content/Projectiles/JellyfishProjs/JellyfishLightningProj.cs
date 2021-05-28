@@ -71,16 +71,16 @@ namespace BlockContentMod.Content.Projectiles.JellyfishProjs
             return false;
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) => false;
 
-        public override void PostDraw(Color lightColor)
+        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             Asset<Texture2D> texture = ModContent.GetTexture("BlockContentMod/Assets/Streak_" + (short)1);
 
-            Color alphaOrange = ExtendedColor.JellyOrange;
+            Color alphaOrange = EColor.JellyfishOrange;
             alphaOrange.A = 0;
 
-            ExtendedUtils.DrawStreak(texture, SpriteEffects.None, Projectile.Center - Main.screenPosition, texture.Size() / 2f, Projectile.scale * 0.3f, 1f, 1.2f, Projectile.rotation, alphaOrange, Color.White);
+            EUtils.DrawStreak(texture, SpriteEffects.None, Projectile.Center - Main.screenPosition, texture.Size() / 2f, Projectile.scale * 0.3f, 1f, 1.2f, Projectile.rotation, alphaOrange, Color.White);
 
             for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[Type]; i++)
             {
@@ -89,9 +89,9 @@ namespace BlockContentMod.Content.Projectiles.JellyfishProjs
                 float length = Projectile.scale * MathHelper.Lerp(1.5f, 1f, Terraria.Utils.GetLerpValue(60, 1, i, true));
                 Color lerpColor = Color.Lerp(Color.Goldenrod, Color.White, strength);
 
-                ExtendedUtils.DrawStreak(texture, SpriteEffects.None, Projectile.oldPos[i] + (Projectile.Size / 2) - Main.screenPosition, texture.Size() / 2f, strength2, 0.9f, length, Projectile.oldRot[i], alphaOrange, lerpColor);
+                EUtils.DrawStreak(texture, SpriteEffects.None, Projectile.oldPos[i] + (Projectile.Size / 2) - Main.screenPosition, texture.Size() / 2f, strength2, 0.9f, length, Projectile.oldRot[i], alphaOrange, lerpColor);
 
-                Lighting.AddLight(Projectile.Center, ExtendedColor.JellyOrange.ToVector3() * 0.3f * strength);
+                Lighting.AddLight(Projectile.Center, EColor.JellyfishOrange.ToVector3() * 0.3f * strength);
             }
 
             if (Projectile.timeLeft >= 130)

@@ -17,7 +17,7 @@ namespace BlockContentMod.Content.Dusts
             dust.rotation = dust.velocity.ToRotation() - MathHelper.PiOver2;
             dust.velocity *= 1.08f;
 
-            Lighting.AddLight(dust.position, ExtendedColor.JellyRed.ToVector3() * dust.scale * 0.3f);
+            Lighting.AddLight(dust.position, EColor.JellyfishRed.ToVector3() * dust.scale * 0.3f);
 
             return true;
         }

@@ -57,11 +57,11 @@ namespace BlockContentMod.Content.Projectiles.JellyfishProjs
                 Projectile.hostile = true;
 
                 SoundEngine.PlaySound(SoundID.Item62, Projectile.position);
-                Lighting.AddLight(Projectile.Center, ExtendedColor.JellyOrange.ToVector3());
+                Lighting.AddLight(Projectile.Center, EColor.JellyfishOrange.ToVector3());
 
                 for (int i = 0; i < 25; i++)
                 {
-                    Vector2 speed = Vector2.UnitY.RotatedByRandom(ExtendedUtils.GetCircle(i, 25)) * Main.rand.Next(6, 18) * 0.33f;
+                    Vector2 speed = Vector2.UnitY.RotatedByRandom(EUtils.GetCircle(i, 25)) * Main.rand.Next(6, 18) * 0.33f;
 
                     Dust dust = Main.dust[Dust.NewDust(Projectile.Center, 0, 0, ModContent.DustType<JellyfishBubbleDust>(), 0, 0, 0, Color.White, 1.5f)];
                     dust.noGravity = true;
@@ -77,7 +77,7 @@ namespace BlockContentMod.Content.Projectiles.JellyfishProjs
             }
 
             float lightStrength = Terraria.Utils.GetLerpValue(0, 80, Projectile.ai[0]);
-            Lighting.AddLight(Projectile.Center, ExtendedColor.JellyOrange.ToVector3() * lightStrength);
+            Lighting.AddLight(Projectile.Center, EColor.JellyfishOrange.ToVector3() * lightStrength);
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
@@ -88,7 +88,7 @@ namespace BlockContentMod.Content.Projectiles.JellyfishProjs
             return false;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             Asset<Texture2D> glowBall = ModContent.GetTexture("BlockContentMod/Assets/GlowBall_" + (short)1);
             Color drawColor = Color.White;
@@ -96,25 +96,25 @@ namespace BlockContentMod.Content.Projectiles.JellyfishProjs
 
             for (int i = 0; i < 4; i++)
             {
-                float glowScale = ExtendedUtils.GetSquareLerp(-5, 30, 50, Projectile.ai[0] - (i * 3f)) * 0.8f;
-                ExtendedUtils.DrawStreak(glowBall, SpriteEffects.None, Projectile.Center - Main.screenPosition, glowBall.Size() / 2f, glowScale, 1.5f + (i / 2), 1.5f + (i / 2), 0, ExtendedColor.JellyOrange, Color.PaleGoldenrod, 0.2f);
+                float glowScale = EUtils.GetSquareLerp(-5, 30, 50, Projectile.ai[0] - (i * 3f)) * 0.8f;
+                EUtils.DrawStreak(glowBall, SpriteEffects.None, Projectile.Center - Main.screenPosition, glowBall.Size() / 2f, glowScale, 1.5f + (i / 2), 1.5f + (i / 2), 0, EColor.JellyfishOrange, Color.PaleGoldenrod, 0.2f);
             }
             if (Projectile.ai[0] <= 50)
             {
-                float bubbleScale = ExtendedUtils.GetSquareLerp(1, 30, 1, Projectile.ai[0]);
+                float bubbleScale = EUtils.GetSquareLerp(1, 30, 1, Projectile.ai[0]);
                 for (int i = 0; i < 5; i++)
                 {
                     float strength = Terraria.Utils.GetLerpValue(10, 0, i, true);
-                    Color trailColor = Color.Lerp(Color.Goldenrod, ExtendedColor.JellyOrange, strength) * strength;
+                    Color trailColor = Color.Lerp(Color.Goldenrod, EColor.JellyfishOrange, strength) * strength;
                     trailColor.A /= 2;
                     Vector2 pos = Projectile.oldPos[i] - Main.screenPosition + (Projectile.Size / 2f);
                     Main.EntitySpriteDraw(TextureAssets.Projectile[Type].Value, pos, null, trailColor, 0, Projectile.Size / 2f, bubbleScale, SpriteEffects.None, 0);
                 }
-                Main.EntitySpriteDraw(TextureAssets.Projectile[Type].Value, Projectile.Center - Main.screenPosition, null, drawColor, 0, Projectile.Size / 2f, bubbleScale, SpriteEffects.None, 0);
+                spriteBatch.Draw(TextureAssets.Projectile[Type].Value, Projectile.Center - Main.screenPosition, null, drawColor, 0, Projectile.Size / 2f, bubbleScale, SpriteEffects.None, 0);
             }
 
-            float explosionScale = ExtendedUtils.GetSquareLerp(45, 48, 60, Projectile.ai[0]) * 1.8f;
-            ExtendedUtils.DrawStreak(glowBall, SpriteEffects.None, Projectile.Center - Main.screenPosition, glowBall.Size() / 2f, explosionScale, 2f, 2f, 0f, ExtendedColor.JellyOrange, Color.PaleGoldenrod);
+            float explosionScale = EUtils.GetSquareLerp(45, 48, 60, Projectile.ai[0]) * 1.8f;
+            EUtils.DrawStreak(glowBall, SpriteEffects.None, Projectile.Center - Main.screenPosition, glowBall.Size() / 2f, explosionScale, 2f, 2f, 0f, EColor.JellyfishOrange, Color.PaleGoldenrod);
 
             if (Projectile.ai[0] < 60)
             {

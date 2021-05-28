@@ -38,7 +38,7 @@ namespace BlockContentMod.Content.NPCs.JellyfishBoss
         public static int JellyExplodeDust = ModContent.DustType<JellyExplosionDust>();
         public static int CoreOffset = 40;
 
-        public override string Texture => "BlockContentMod/Content/NPCs/JellyfishBoss/JellyfishBubble";
+        public override string Texture => "BlockContentMod/Content/NPCs/JellyfishBoss/JellyfishBossBubble";
 
         public override string BossHeadTexture => "BlockContentMod/Content/NPCs/JellyfishBoss/JellyfishBoss_Head";
 
@@ -89,8 +89,8 @@ namespace BlockContentMod.Content.NPCs.JellyfishBoss
 
         public override void SetDefaults()
         {
-            NPC.width = 158;
-            NPC.height = 150;
+            NPC.width = 232;
+            NPC.height = 210;
 
             NPC.boss = true;
             NPC.noGravity = true;
@@ -329,7 +329,7 @@ namespace BlockContentMod.Content.NPCs.JellyfishBoss
 
             Slow();
 
-            Vector2 pos = ExtendedUtils.GetPositionAroundTarget(player.MountedCenter, Main.rand.Next(370, 460), true);
+            Vector2 pos = EUtils.GetPositionAroundTarget(player.MountedCenter, Main.rand.Next(370, 460), true);
 
             ExtraCounter++;
 
@@ -443,7 +443,7 @@ namespace BlockContentMod.Content.NPCs.JellyfishBoss
             {
                 if (LocalCounter == (i * 3))
                 {
-                    float rotation = ExtendedUtils.GetCircle(i * 3, TotalProjectiles) + (Main.rand.NextFloat(-3, 3) / 30);
+                    float rotation = EUtils.GetCircle(i * 3, TotalProjectiles) + (Main.rand.NextFloat(-3, 3) / 30);
                     Vector2 offset = new Vector2(0, CoreOffset).RotatedBy(rotation);
                     Vector2 speed = new Vector2(0, Main.rand.Next(15, 18)).RotatedBy(rotation);
                     Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center + offset, speed, ModContent.ProjectileType<JellyfishBoltProj>(), NPC.GetAttackDamage_ScaledByStrength(10), 0);
@@ -492,19 +492,19 @@ namespace BlockContentMod.Content.NPCs.JellyfishBoss
 
                     if (LocalCounter == TrailAttackTime * multiplier && aroundPlayer == true)
                     {
-                        Vector2 pos1 = ExtendedUtils.GetPositionAroundTarget(target.MountedCenter, Main.rand.Next(60, 720), true);
+                        Vector2 pos1 = EUtils.GetPositionAroundTarget(target.MountedCenter, Main.rand.Next(60, 720), true);
                         Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), pos1, pos1.DirectionTo(player.MountedCenter), ModContent.ProjectileType<JellyfishExplosionProj>(), NPC.GetAttackDamage_ScaledByStrength(20), 0);
                     }
 
                     if (LocalCounter == (TrailAttackTime * multiplier * 2f) + (TrailAttackTime * 0.5f) && onPlayer == true)
                     {
-                        Vector2 pos2 = ExtendedUtils.GetPositionAroundTarget(target.MountedCenter, Main.rand.Next(5, 60), false);
+                        Vector2 pos2 = EUtils.GetPositionAroundTarget(target.MountedCenter, Main.rand.Next(5, 60), false);
                         Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), pos2, pos2.DirectionTo(target.MountedCenter), ModContent.ProjectileType<JellyfishExplosionProj>(), NPC.GetAttackDamage_ScaledByStrength(20), 0);
                     }
 
                     if (LocalCounter == (TrailAttackTime * multiplier * 1.5f) && shootOtherProjectiles == true)
                     {
-                        Vector2 pos3 = ExtendedUtils.GetPositionAroundTarget(target.MountedCenter, Main.rand.Next(900, 1200), false);
+                        Vector2 pos3 = EUtils.GetPositionAroundTarget(target.MountedCenter, Main.rand.Next(900, 1200), false);
                         Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), pos3, pos3.DirectionTo(target.MountedCenter).RotatedByRandom(0.1f) * Main.rand.Next(12, 15), ModContent.ProjectileType<JellyfishBoltProj>(), NPC.GetAttackDamage_ScaledByStrength(15), 0);
                     }
                 }
@@ -539,7 +539,7 @@ namespace BlockContentMod.Content.NPCs.JellyfishBoss
             {
                 if (LocalCounter == (i * 3) && LocalCounter >= 10)
                 {
-                    float rotation = ExtendedUtils.GetCircle(i * 3, TotalProjectiles) + (Main.rand.NextFloat(-3, 3) / 30);
+                    float rotation = EUtils.GetCircle(i * 3, TotalProjectiles) + (Main.rand.NextFloat(-3, 3) / 30);
                     Vector2 offset = new Vector2(0, CoreOffset).RotatedBy(rotation);
                     Vector2 speed = new Vector2(0, Main.rand.Next(11, 15)).RotatedBy(rotation);
                     Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center + offset, speed, ModContent.ProjectileType<JellyfishMovingExplosionProj>(), NPC.GetAttackDamage_ScaledByStrength(20), 0);
@@ -548,7 +548,7 @@ namespace BlockContentMod.Content.NPCs.JellyfishBoss
                 if (LocalCounter == (i * 6))
                 {
                     Vector2 speed = NPC.Center.DirectionTo(player.MountedCenter);
-                    Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), ExtendedUtils.GetPositionAroundTarget(NPC.Center, Main.rand.Next(60, 720), true), speed, ModContent.ProjectileType<JellyfishMovingExplosionProj>(), NPC.GetAttackDamage_ScaledByStrength(20), 0);
+                    Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), EUtils.GetPositionAroundTarget(NPC.Center, Main.rand.Next(60, 720), true), speed, ModContent.ProjectileType<JellyfishMovingExplosionProj>(), NPC.GetAttackDamage_ScaledByStrength(20), 0);
                 }
             }
 
@@ -597,7 +597,7 @@ namespace BlockContentMod.Content.NPCs.JellyfishBoss
                 for (int i = 0; i < TotalExplosionProjectiles; i++)
                 {
                     DustHelper(false, 1f, BubbleDust);
-                    Vector2 speed = new Vector2(0, Main.rand.Next(5, 6)).RotatedBy(ExtendedUtils.GetCircle(i, TotalExplosionProjectiles)).RotatedByRandom(0.3f);
+                    Vector2 speed = new Vector2(0, Main.rand.Next(5, 6)).RotatedBy(EUtils.GetCircle(i, TotalExplosionProjectiles)).RotatedByRandom(0.3f);
                     Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center, speed, ModContent.ProjectileType<JellyfishLightningProj>(), NPC.GetAttackDamage_ScaledByStrength(15), 0);
                 }
             }
@@ -625,7 +625,7 @@ namespace BlockContentMod.Content.NPCs.JellyfishBoss
             {
                 if (LocalCounter == (TrailAttackTime * i) + (TrailAttackTime * 0.5f))
                 {
-                    Vector2 pos = ExtendedUtils.GetPositionAroundTarget(NPC.Center, Main.rand.Next(50, 500), true);
+                    Vector2 pos = EUtils.GetPositionAroundTarget(NPC.Center, Main.rand.Next(50, 500), true);
                     Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), pos, Vector2.Zero, ModContent.ProjectileType<JellyfishExplosionProj>(), NPC.GetAttackDamage_ScaledByStrength(20), 0);
                 }
 
@@ -661,21 +661,102 @@ namespace BlockContentMod.Content.NPCs.JellyfishBoss
 
         public override Color? GetAlpha(Color drawColor) => Color.White;
 
-        public float WobbleCounter { get; set; }
+        //public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+        //{
+        //    
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+        //    WobbleCounter++;
+        //    float tick = 90;
+        //    if (WobbleCounter > tick)
+        //        WobbleCounter = 0;
+        //    float wobbleReal = (WobbleCounter * MathHelper.Pi) / tick;
+
+        //    float waveX = (float)Math.Cos(wobbleReal * 4f);
+        //    float waveY = (float)Math.Sin(wobbleReal * 4f);
+        //    Vector2 wobble = new Vector2(1 + (waveX * 0.2f), 1 + (waveY * 0.2f));
+
+        //    float rotation = NPC.rotation;
+        //    Vector2 bubbleOrigin = bubbleTexture.Size() / 2;
+        //    Vector2 coreOrigin = coreGlow.Size() / 2;
+
+        //    Vector2 trueScale = Vector2.One;
+        //    Vector2 wobbleScale = trueScale;
+        //    Vector2 tentacleWobble = trueScale;
+        //    Vector2 offsetVector = (Vector2.UnitY * trueScale * 20).RotatedBy(NPC.rotation);
+
+        //    Color color = Color.White;
+        //    color.A = 10;
+        //    Color color2 = Color.White;
+        //    color2.A = 40;
+
+        //    if (DrawPhase == -1)//teleport
+        //    {
+        //        float t = (float)Math.Abs(Math.Cos(ExtraCounter / (TeleportTime / MathHelper.Pi)));
+
+        //        trueScale = Vector2.One * Utils.GetLerpValue(0f, 1f, t * 1.1f, true);
+        //        wobbleScale = Vector2.One * Utils.GetLerpValue(0f, 1f, t * 1.1f, true);
+        //        tentacleWobble = new Vector2(waveX, waveY) * Utils.GetLerpValue(0f, 1f, t * 1.1f, true);
+
+        //        float scaleFactor = Utils.GetLerpValue(1.5f, 0f, t * 1.1f, true) + 0.54f;
+        //        bool dir = ExtraCounter > (TeleportTime / 2);
+        //        DustHelper(dir, scaleFactor, BubbleDust);
+        //    }
+        //    else if (DrawPhase == -3)//more intense wobble
+        //    {
+        //        float waveX2 = (float)Math.Cos(wobbleReal * 8f);
+        //        float waveY2 = (float)Math.Sin(wobbleReal * 8f);
+        //        Vector2 wobble2 = new Vector2(1 + (waveX2 * 0.25f), 1 + (waveY2 * 0.25f));
+
+        //        wobbleScale = wobble2 * trueScale;
+        //        tentacleWobble = new Vector2(waveX2, waveY2) * trueScale;
+        //    }
+        //    else if (DrawPhase == 0)//default
+        //    {
+        //        wobbleScale = wobble * trueScale;
+        //        tentacleWobble = new Vector2(waveX, waveY) * trueScale;
+        //    }
+
+        //    spriteBatch.Draw(coreTexture.Value, NPC.Center - Main.screenPosition, null, Color.White, rotation, coreOrigin, trueScale, SpriteEffects.None, 0f);
+
+        //    //
+
+        //    spriteBatch.Draw(bubbleGlow.Value, NPC.Center - offsetVector - Main.screenPosition, null, color2, rotation, bubbleOrigin, wobbleScale, SpriteEffects.None, 0f);
+
+        //    Dust coreDust = Dust.NewDustDirect(NPC.Center - new Vector2(30), 60, 60, ModContent.DustType<JellyExplosionDust>(), 0, 0, 128, Color.White, 1.5f);
+        //    coreDust.velocity *= 0.9f;
+        //    coreDust.position += NPC.velocity;
+
+        //    for (int i = 0; i < 2; i++)
+        //    {
+        //        float waveW = (float)Math.Cos((wobbleReal * 2f) + (i * MathHelper.PiOver4)) * 0.06f;
+        //        Vector2 glowScale = (new Vector2(0.89f) + new Vector2(waveW)) * trueScale;
+        //        spriteBatch.Draw(coreGlow.Value, NPC.Center - Main.screenPosition, null, color2 * 0.5f, rotation, coreOrigin, glowScale, SpriteEffects.None, 0f);
+        //    }
+
+        //    float waveV = (float)Math.Cos((wobbleReal * 2f) + 1f) * 0.06f;
+        //    Vector2 glowScale0 = (new Vector2(0.89f) + new Vector2(waveV)) * trueScale;
+        //    UtilsExtension.DrawStreak(glowBall, SpriteEffects.None, NPC.Center - Main.screenPosition, glowBall.Size() / 2f, 1.5f, glowScale0.X, glowScale0.Y, rotation, ColorExtension.JellyRed, ColorExtension.JellyOrange * 0.7f);
+
+        //    spriteBatch.Draw(bubbleTexture.Value, NPC.Center - offsetVector - Main.screenPosition, null, Color.White, rotation, bubbleOrigin, wobbleScale, SpriteEffects.None, 0f);
+
+        //    Lighting.AddLight(NPC.Center, ColorExtension.JellyRed.ToVector3() * 0.1f);
+
+        //    return false;
+        //}
+
+        public float Counter { get; set; }
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor) => false;
+
+        public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
         {
-            Asset<Texture2D> glowBall = ModContent.GetTexture("BlockContentMod/Assets/GlowBall_" + (short)1);
-            Asset<Texture2D> bubbleTexture = ModContent.GetTexture("BlockContentMod/Content/NPCs/JellyfishBoss/JellyfishBubble");
-            Asset<Texture2D> bubbleGlow = ModContent.GetTexture("BlockContentMod/Content/NPCs/JellyfishBoss/JellyfishBubble_Glow");
-            Asset<Texture2D> coreTexture = ModContent.GetTexture("BlockContentMod/Content/NPCs/JellyfishBoss/JellyfishCore");
-            Asset<Texture2D> coreGlow = ModContent.GetTexture("BlockContentMod/Content/NPCs/JellyfishBoss/JellyfishCore_Glow");
-
-            WobbleCounter++;
+            Counter++;
             float tick = 90;
-            if (WobbleCounter > tick)
-                WobbleCounter = 0;
-            float wobbleReal = (WobbleCounter * MathHelper.Pi) / tick;
+            if (Counter > tick)
+                Counter = 0;
+            float realCount = (Counter * MathHelper.Pi) / tick;
+
+            float tp = (float)Math.Abs(Math.Cos(ExtraCounter / (TeleportTime / MathHelper.Pi)));
 
             if (NPC.velocity.Length() >= 3f)
             {
@@ -692,77 +773,14 @@ namespace BlockContentMod.Content.NPCs.JellyfishBoss
                 }
             }
 
-            float waveX = (float)Math.Cos(wobbleReal * 4f);
-            float waveY = (float)Math.Sin(wobbleReal * 4f);
-            Vector2 wobble = new Vector2(1 + (waveX * 0.2f), 1 + (waveY * 0.2f));
-
-            float rotation = NPC.rotation;
-            Vector2 bubbleOrigin = bubbleTexture.Size() / 2;
-            Vector2 coreOrigin = coreGlow.Size() / 2;
-
-            Vector2 trueScale = Vector2.One;
-            Vector2 wobbleScale = trueScale;
-            Vector2 tentacleWobble = trueScale;
-            Vector2 offsetVector = (Vector2.UnitY * trueScale * 20).RotatedBy(NPC.rotation);
-
-            Color color = Color.White;
-            color.A = 10;
-            Color color2 = Color.White;
-            color2.A = 40;
-
-            if (DrawPhase == -1)//teleport
+            if (DrawPhase == -1)
             {
-                float t = (float)Math.Abs(Math.Cos(ExtraCounter / (TeleportTime / MathHelper.Pi)));
-
-                trueScale = Vector2.One * Utils.GetLerpValue(0f, 1f, t * 1.1f, true);
-                wobbleScale = Vector2.One * Utils.GetLerpValue(0f, 1f, t * 1.1f, true);
-                tentacleWobble = new Vector2(waveX, waveY) * Utils.GetLerpValue(0f, 1f, t * 1.1f, true);
-
-                float scaleFactor = Utils.GetLerpValue(1.5f, 0f, t * 1.1f, true) + 0.54f;
+                float scaleFactor = Utils.GetLerpValue(1.5f, 0f, tp * 1.1f, true) + 0.54f;
                 bool dir = ExtraCounter > (TeleportTime / 2);
                 DustHelper(dir, scaleFactor, BubbleDust);
             }
-            else if (DrawPhase == -3)//more intense wobble
-            {
-                float waveX2 = (float)Math.Cos(wobbleReal * 8f);
-                float waveY2 = (float)Math.Sin(wobbleReal * 8f);
-                Vector2 wobble2 = new Vector2(1 + (waveX2 * 0.25f), 1 + (waveY2 * 0.25f));
 
-                wobbleScale = wobble2 * trueScale;
-                tentacleWobble = new Vector2(waveX2, waveY2) * trueScale;
-            }
-            else if (DrawPhase == 0)//default
-            {
-                wobbleScale = wobble * trueScale;
-                tentacleWobble = new Vector2(waveX, waveY) * trueScale;
-            }
-            
-            spriteBatch.Draw(coreTexture.Value, NPC.Center - Main.screenPosition, null, Color.White, rotation, coreOrigin, trueScale, SpriteEffects.None, 0f);
-
-            default(JellyfishTentacleHelper).DrawLowerHalfTentacles(spriteBatch, NPC.Center, NPC.rotation, trueScale.Y, tentacleWobble);
-
-            spriteBatch.Draw(bubbleGlow.Value, NPC.Center - offsetVector - Main.screenPosition, null, color2, rotation, bubbleOrigin, wobbleScale, SpriteEffects.None, 0f);
-
-            Dust coreDust = Dust.NewDustDirect(NPC.Center - new Vector2(30), 60, 60, ModContent.DustType<JellyExplosionDust>(), 0, 0, 128, Color.White, 1.5f);
-            coreDust.velocity *= 0.9f;
-            coreDust.position += NPC.velocity;
-
-            for (int i = 0; i < 2; i++)
-            {
-                float waveW = (float)Math.Cos((wobbleReal * 2f) + (i * MathHelper.PiOver4)) * 0.06f;
-                Vector2 glowScale = (new Vector2(0.89f) + new Vector2(waveW)) * trueScale;
-                spriteBatch.Draw(coreGlow.Value, NPC.Center - Main.screenPosition, null, color2 * 0.5f, rotation, coreOrigin, glowScale, SpriteEffects.None, 0f);
-            }
-
-            float waveV = (float)Math.Cos((wobbleReal * 2f) + 1f) * 0.06f;
-            Vector2 glowScale0 = (new Vector2(0.89f) + new Vector2(waveV)) * trueScale;
-            ExtendedUtils.DrawStreak(glowBall, SpriteEffects.None, NPC.Center - Main.screenPosition, glowBall.Size() / 2f, 1.5f, glowScale0.X, glowScale0.Y, rotation, ExtendedColor.JellyRed, ExtendedColor.JellyOrange * 0.7f);
-
-            spriteBatch.Draw(bubbleTexture.Value, NPC.Center - offsetVector - Main.screenPosition, null, Color.White, rotation, bubbleOrigin, wobbleScale, SpriteEffects.None, 0f);
-
-            Lighting.AddLight(NPC.Center, ExtendedColor.JellyRed.ToVector3() * 0.1f);
-
-            return false;
+            default(JellyfishDrawer).DrawJellyfish(realCount, tp, DrawPhase, NPC.Center, NPC.rotation);
         }
     }
 }
